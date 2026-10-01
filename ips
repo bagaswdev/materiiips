@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPS Kelas 9 - Interactive Learning Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                        },
+                        secondary: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
+
+    <!-- Header / Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-sky-200">
+                        <i class="fa-solid fa-earth-americas text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg text-slate-800 tracking-tight block leading-tight">IPS Kelas 9</span>
+                        <span class="text-xs font-semibold text-sky-600 block">Interactive Learning</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg font-medium text-sm transition duration-150 flex items-center space-x-2 text-sky-600 bg-sky-50">
+                        <i class="fa-solid fa-house text-xs"></i>
+                        <span>Home</span>
+                    </button>
+                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-4 py-2 rounded-lg font-medium text-sm text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open text-xs"></i>
+                        <span>Materi</span>
+                    </button>
+                    <button onclick="switchTab('video')" id="nav-video" class="nav-btn px-4 py-2 rounded-lg font-medium text-sm text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-play text-xs"></i>
+                        <span>Video</span>
+                    </button>
+                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-4 py-2 rounded-lg font-medium text-sm text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-brain text-xs"></i>
+                        <span>Kuis Singkat</span>
+                    </button>
+                    <button onclick="switchTab('tentang')" id="nav-tentang" class="nav-btn px-4 py-2 rounded-lg font-medium text-sm text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-info text-xs"></i>
+                        <span>Tentang Kami</span>
+                    </button>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <button onclick="switchTab('home')" class="mobile-nav-btn w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium flex items-center space-x-3 text-sky-600 bg-sky-50">
+                <i class="fa-solid fa-house w-5 text-center"></i><span>Home</span>
+            </button>
+            <button onclick="switchTab('materi')" class="mobile-nav-btn w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium flex items-center space-x-3 text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-book-open w-5 text-center"></i><span>Materi Belajar</span>
+            </button>
+            <button onclick="switchTab('video')" class="mobile-nav-btn w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium flex items-center space-x-3 text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-circle-play w-5 text-center"></i><span>Video Pembelajaran</span>
+            </button>
+            <button onclick="switchTab('kuis')" class="mobile-nav-btn w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium flex items-center space-x-3 text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-brain w-5 text-center"></i><span>Kuis Interaktif</span>
+            </button>
+            <button onclick="switchTab('tentang')" class="mobile-nav-btn w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium flex items-center space-x-3 text-slate-600 hover:bg-slate-50">
+                <i class="fa-solid fa-circle-info w-5 text-center"></i><span>Tentang Kami</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+        
+        <!-- SECTION: HOME -->
+        <section id="section-home" class="page-section">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-br from-slate-900 via-sky-950 to-indigo-900 text-white overflow-hidden py-12 lg:py-20">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                                <i class="fa-solid fa-sparkles mr-1.5 text-amber-400"></i> Kurikulum Merdeka & K13 Revisi
+                            </span>
+                            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                                Jelajahi Dunia & Masyarakat dengan IPS <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300">Kelas 9</span>
+                            </h1>
+                            <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0">
+                                Belajar Ilmu Pengetahuan Sosial kini lebih mudah, interaktif, dan menyenangkan! Temukan materi lengkap, video ilustratif, dan kuis latihan mandiri.
+                            </p>
+                            <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+                                <button onclick="switchTab('materi')" class="px-6 py-3.5 rounded-xl font-semibold bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2">
+                                    <span>Mulai Belajar</span>
+                                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                                </button>
+                                <button onclick="switchTab('video')" class="px-6 py-3.5 rounded-xl font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-play text-amber-400 text-sm"></i>
+                                    <span>Tonton Video</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Hero Image/Graphic -->
+                        <div class="lg:col-span-5 flex justify-center">
+                            <div class="relative w-full max-w-sm sm:max-w-md">
+                                <div class="absolute -inset-1 bg-gradient-to-r from-sky-500 to-amber-500 rounded-3xl blur opacity-30 animate-pulse"></div>
+                                <div class="relative bg-slate-800/80 border border-slate-700/80 p-6 rounded-3xl shadow-2xl backdrop-blur-md">
+                                    <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
+                                        <div class="flex space-x-2">
+                                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                        </div>
+                                        <span class="text-xs font-mono text-slate-400">IPS IX - Dashboard</span>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="p-3 bg-slate-700/50 rounded-xl flex items-center space-x-3">
+                                            <div class="p-2.5 bg-sky-500/20 text-sky-400 rounded-lg"><i class="fa-solid fa-earth-asia text-lg"></i></div>
+                                            <div>
+                                                <h4 class="text-sm font-semibold text-white">Perubahan Sosial Budaya</h4>
+                                                <p class="text-xs text-slate-400">Sosiologi • Bab 1</p>
+                                            </div>
+                                        </div>
+                                        <div class="p-3 bg-slate-700/50 rounded-xl flex items-center space-x-3">
+                                            <div class="p-2.5 bg-amber-500/20 text-amber-400 rounded-lg"><i class="fa-solid fa-globe text-lg"></i></div>
+                                            <div>
+                                                <h4 class="text-sm font-semibold text-white">Globalisasi & Modernisasi</h4>
+                                                <p class="text-xs text-slate-400">Sosiologi • Bab 2</p>
+                                            </div>
+                                        </div>
+                                        <div class="p-3 bg-slate-700/50 rounded-xl flex items-center space-x-3">
+                                            <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-lg"><i class="fa-solid fa-chart-line text-lg"></i></div>
+                                            <div>
+                                                <h4 class="text-sm font-semibold text-white">Perdagangan Internasional</h4>
+                                                <p class="text-xs text-slate-400">Ekonomi • Bab 3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats & Counter Section -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-lg border border-slate-100 text-center transform transition hover:-translate-y-1">
+                        <div class="inline-flex p-3 rounded-xl bg-sky-50 text-sky-600 mb-2">
+                            <i class="fa-solid fa-book text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800">4 Bab</h3>
+                        <p class="text-xs font-medium text-slate-500">Materi Lengkap</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-lg border border-slate-100 text-center transform transition hover:-translate-y-1">
+                        <div class="inline-flex p-3 rounded-xl bg-amber-50 text-amber-600 mb-2">
+                            <i class="fa-solid fa-video text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800">6+ Video</h3>
+                        <p class="text-xs font-medium text-slate-500">Video Edukasi</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-lg border border-slate-100 text-center transform transition hover:-translate-y-1">
+                        <div class="inline-flex p-3 rounded-xl bg-purple-50 text-purple-600 mb-2">
+                            <i class="fa-solid fa-clipboard-question text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800">10 Soal</h3>
+                        <p class="text-xs font-medium text-slate-500">Kuis Evaluasi</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-lg border border-slate-100 text-center transform transition hover:-translate-y-1">
+                        <div class="inline-flex p-3 rounded-xl bg-emerald-50 text-emerald-600 mb-2">
+                            <i class="fa-solid fa-user-graduate text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800" id="progress-percent-home">0%</h3>
+                        <p class="text-xs font-medium text-slate-500">Progres Belajar Anda</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Highlights -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Mengapa Belajar IPS di Sini?</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2">Platform kami dirancang khusus untuk mempermudah pemahaman siswa tingkat SMP/MTs.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Materi Terstruktur</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Poin-poin penting disusun sesuai dengan Kurikulum Merdeka dan K13 Revisi agar mudah dihafalkan dan dipahami.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Belajar Visual & Multimedia</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Dilengkapi dengan video pembelajaran animasi & narasi penjelasan untuk membantu pemahaman konsep abstrak.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Uji Pemahaman Mandiri</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Fitur kuis pilihan ganda interaktif dengan pembahasan langsung untuk menguji pemahaman setelah membaca materi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daftar Bab Ringkas (Quick Preview) -->
+            <div class="bg-slate-100/70 py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Daftar Bab Utama Kelas 9</h2>
+                            <p class="text-slate-600 text-sm mt-1">Pilih topik yang ingin Anda pelajari hari ini</p>
+                        </div>
+                        <button onclick="switchTab('materi')" class="mt-4 md:mt-0 inline-flex items-center space-x-2 text-sky-600 hover:text-sky-700 font-semibold text-sm">
+                            <span>Lihat Semua Materi</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div id="home-chapter-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: MATERI -->
+        <section id="section-materi" class="page-section hidden py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Page Header & Filter -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-800">Materi Pembelajaran IPS</h2>
+                        <p class="text-slate-500 text-sm mt-1">Pilih bab untuk membaca rangkuman lengkap IPS Kelas 9 SMP.</p>
+                    </div>
+                    
+                    <!-- Search & Filters -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                            <input type="text" id="materi-search" oninput="filterMateri()" placeholder="Cari judul materi..." class="w-full sm:w-60 pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition">
+                        </div>
+                        <select id="materi-semester-filter" onchange="filterMateri()" class="bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="all">Semua Semester</option>
+                            <option value="1">Semester 1</option>
+                            <option value="2">Semester 2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Progress Indicator Bar -->
+                <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2.5 bg-sky-600 text-white rounded-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Progres Penguasaan Materi</h4>
+                            <p class="text-xs text-slate-500"><span id="materi-completed-count">0</span> dari <span id="materi-total-count">4</span> bab selesai ditandai.</p>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-48 bg-slate-200 h-3 rounded-full overflow-hidden">
+                        <div id="materi-progress-bar" class="bg-sky-500 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- Grid Cards Materi -->
+                <div id="materi-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                    <!-- Dynamic Material Cards rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: VIDEO -->
+        <section id="section-video" class="page-section hidden py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Galeri Video Edukasi IPS</h2>
+                    <p class="text-slate-500 text-sm mt-1">Tonton video interaktif untuk memperdalam pemahaman materi IPS Kelas 9.</p>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <button onclick="filterVideoCategory('all')" class="video-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-sky-600 text-white shadow-sm transition">Semua Topik</button>
+                    <button onclick="filterVideoCategory('Sosiologi')" class="video-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition">Perubahan Sosial & Globalisasi</button>
+                    <button onclick="filterVideoCategory('Ekonomi')" class="video-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition">Ekonomi Internasional</button>
+                    <button onclick="filterVideoCategory('Sejarah')" class="video-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition">Sejarah Indonesia</button>
+                </div>
+
+                <!-- Main Video Display Grid -->
+                <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic Video Cards rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: KUIS -->
+        <section id="section-kuis" class="page-section hidden py-10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-8">
+                    <!-- Quiz Header -->
+                    <div id="quiz-header" class="border-b border-slate-100 pb-6 mb-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full uppercase tracking-wider">Kuis Latihan</span>
+                            <span id="quiz-timer" class="text-xs font-semibold text-slate-500"><i class="fa-regular fa-clock mr-1"></i> Mode Evaluasi Mandiri</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-800">Uji Pemahaman IPS Kelas 9</h2>
+                        <p class="text-slate-500 text-sm mt-1">Jawab pertanyaan-pertanyaan berikut untuk menguji pemahaman Anda mengenai seluruh bab IPS Kelas 9.</p>
+                    </div>
+
+                    <!-- Quiz Start Container -->
+                    <div id="quiz-start-box" class="text-center py-8">
+                        <div class="w-20 h-20 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">Siap untuk Mulai Kuis?</h3>
+                        <p class="text-slate-500 text-sm max-w-md mx-auto mb-6">Kuis terdiri dari 5 soal pilihan ganda. Skor dan pembahasan akan langsung ditampilkan setelah kuis selesai.</p>
+                        <button onclick="startQuiz()" class="px-8 py-3.5 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl shadow-lg shadow-sky-600/30 transition transform hover:-translate-y-0.5">
+                            Mulai Kuis Sekarang
+                        </button>
+                    </div>
+
+                    <!-- Quiz Active Questions Box -->
+                    <div id="quiz-active-box" class="hidden">
+                        <div class="flex items-center justify-between text-sm font-semibold text-slate-500 mb-4">
+                            <span>Pertanyaan <span id="quiz-current-num">1</span> dari <span id="quiz-total-num">5</span></span>
+                            <span id="quiz-score-badge" class="text-sky-600">Skor Selesai akan Dihitung</span>
+                        </div>
+
+                        <!-- Progress Bar for Quiz -->
+                        <div class="w-full bg-slate-100 h-2 rounded-full mb-6 overflow-hidden">
+                            <div id="quiz-progress-inner" class="bg-sky-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+
+                        <!-- Question Text -->
+                        <div class="mb-6">
+                            <h3 id="quiz-question-text" class="text-base sm:text-lg font-bold text-slate-800 leading-snug">
+                                <!-- Question inserted dynamically -->
+                            </h3>
+                        </div>
+
+                        <!-- Options List -->
+                        <div id="quiz-options-container" class="space-y-3 mb-8">
+                            <!-- Options rendered dynamically -->
+                        </div>
+
+                        <!-- Actions Buttons -->
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-6">
+                            <button id="quiz-prev-btn" onclick="prevQuestion()" class="px-4 py-2 border border-slate-200 text-slate-600 text-sm font-semibold rounded-xl hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed">
+                                <i class="fa-solid fa-chevron-left mr-2"></i> Sebelumnya
+                            </button>
+                            <button id="quiz-next-btn" onclick="nextQuestion()" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-xl transition">
+                                Selanjutnya <i class="fa-solid fa-chevron-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Result Box -->
+                    <div id="quiz-result-box" class="hidden text-center py-8">
+                        <div id="quiz-result-icon" class="w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 bg-emerald-100 text-emerald-600">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mb-1">Hasil Kuis Anda</h3>
+                        <p class="text-slate-500 text-sm mb-6">Berikut adalah perolehan nilai latihan Anda hari ini.</p>
+
+                        <div class="inline-block bg-slate-50 border border-slate-200 rounded-2xl px-8 py-6 mb-6">
+                            <span class="text-xs uppercase font-bold text-slate-400 tracking-wider block mb-1">Skor Akhir</span>
+                            <span id="quiz-final-score" class="text-5xl font-black text-sky-600">0</span>
+                            <span class="text-sm font-medium text-slate-500 block mt-1">/ 100 Poin</span>
+                        </div>
+
+                        <div id="quiz-feedback-text" class="text-sm font-medium text-slate-700 mb-8 max-w-md mx-auto">
+                            <!-- Feedback statement dynamically set -->
+                        </div>
+
+                        <div class="flex justify-center space-x-4">
+                            <button onclick="startQuiz()" class="px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-xl transition">
+                                <i class="fa-solid fa-rotate-right mr-2"></i> Coba Lagi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: TENTANG KAMI -->
+        <section id="section-tentang" class="page-section hidden py-10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-gradient-to-tr from-sky-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl mx-auto mb-4 shadow-lg shadow-sky-200">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-slate-800">Website Pembelajaran IPS Kelas 9</h2>
+                        <p class="text-slate-500 text-sm mt-2">Inovasi Media Belajar Digital Interaktif untuk SMP/MTs</p>
+                    </div>
+
+                    <div class="space-y-6 text-slate-600 text-sm leading-relaxed">
+                        <div class="bg-sky-50 border border-sky-100 rounded-2xl p-5">
+                            <h3 class="font-bold text-slate-800 text-base mb-2 flex items-center">
+                                <i class="fa-solid fa-bullseye text-sky-600 mr-2"></i> Visi & Tujuan
+                            </h3>
+                            <p>Platform ini dibuat untuk membantu siswa SMP/MTs Kelas 9 dalam mempelajari mata pelajaran Ilmu Pengetahuan Sosial (IPS) secara visual, ringkas, dan dapat diakses kapan saja secara mandiri.</p>
+                        </div>
+
+                        <h3 class="font-bold text-slate-800 text-base pt-2">Cakupan Topik Pembelajaran:</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start space-x-3">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Perubahan Sosial Budaya dalam era modernisasi</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start space-x-3">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Globalisasi & Perkembangan IPTEK</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start space-x-3">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Perdagangan Internasional & Pasar Bebas</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start space-x-3">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Peristiwa Sejarah Indonesia Kemerdekaan & Reformasi</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-slate-100 pt-6 text-center text-slate-400 text-xs">
+                            &copy; 2026 IPS Kelas 9 Interactive Learning. Dirancang untuk pendidikan Indonesia.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Detail Materi Modal Window -->
+    <div id="materi-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] transition-all">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <div class="flex items-center space-x-2">
+                    <span id="modal-chapter-tag" class="px-2.5 py-1 bg-sky-100 text-sky-700 text-xs font-bold rounded-lg uppercase">
+                        Bab 1
+                    </span>
+                    <span id="modal-semester-tag" class="text-xs font-semibold text-slate-500">Semester 1</span>
+                </div>
+                <button onclick="closeMateriModal()" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-6">
+                <div>
+                    <h2 id="modal-title" class="text-2xl font-extrabold text-slate-800 leading-tight">Judul Materi</h2>
+                    <p id="modal-subtitle" class="text-slate-500 text-sm mt-1">Subtema pembelajaran</p>
+                </div>
+
+                <!-- Indikator Belajar Box -->
+                <div class="bg-amber-50/70 border border-amber-200/70 rounded-2xl p-4">
+                    <h4 class="font-bold text-amber-900 text-xs uppercase tracking-wider mb-2 flex items-center">
+                        <i class="fa-solid fa-bullseye text-amber-600 mr-2"></i> Indikator Pembelajaran
+                    </h4>
+                    <ul id="modal-indicators" class="list-disc list-inside text-xs sm:text-sm text-amber-950 space-y-1">
+                        <!-- Dynamic indicators -->
+                    </ul>
+                </div>
+
+                <!-- Detail Body Text -->
+                <div id="modal-body" class="prose max-w-none text-slate-700 text-sm sm:text-base space-y-4 leading-relaxed">
+                    <!-- Detailed text loaded here -->
+                </div>
+
+                <!-- Key Takeaways / Points -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+                    <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center">
+                        <i class="fa-solid fa-key text-sky-600 mr-2"></i> Poin-poin Penting (Rangkuman)
+                    </h4>
+                    <ul id="modal-keypoints" class="space-y-2 text-sm text-slate-600">
+                        <!-- Key points here -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
+                <button id="modal-mark-done-btn" onclick="toggleReadStatusModal()" class="px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center space-x-2 bg-emerald-600 text-white hover:bg-emerald-500 shadow-md">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Tandai Selesai Dibaca</span>
+                </button>
+                <button onclick="closeMateriModal()" class="px-4 py-2.5 text-slate-600 hover:text-slate-800 font-semibold text-xs sm:text-sm">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==================== DATA STORES ==================== */
+        const materiData = [
+            {
+                id: "bab-1",
+                babNum: "Bab 1",
+                semester: 1,
+                subject: "Sosiologi",
+                title: "Perubahan Sosial Budaya",
+                description: "Memahami bentuk-bentuk perubahan sosial, faktor pendorong, penghambat, serta dampaknya bagi masyarakat.",
+                icon: "fa-earth-asia",
+                color: "sky",
+                indicators: [
+                    "Menjelaskan pengertian perubahan sosial budaya.",
+                    "Mengidentifikasi bentuk-bentuk perubahan sosial (lambat/cepat, besar/kecil).",
+                    "Menganalisis faktor pendorong dan penghambat perubahan sosial."
+                ],
+                content: `
+                    <p>Perubahan sosial budaya adalah perubahan yang terjadi pada sistem sosial, struktur, dan fungsi masyarakat, termasuk di dalamnya nilai, sikap, dan pola perilaku antar kelompok.</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">1. Bentuk-bentuk Perubahan Sosial:</h4>
+                    <p><strong>Berdasarkan Waktu:</strong> Evolusi (perubahan lambat tanpa rencana) dan Revolusi (perubahan cepat dan mendasar).</p>
+                    <p><strong>Berdasarkan Pengaruh:</strong> Perubahan berpengaruh kecil (contoh: gaya rambut, mode pakaian) dan Perubahan berpengaruh besar (contoh: industrialisasi).</p>
+                    <p><strong>Berdasarkan Perencanaan:</strong> Perubahan yang direncanakan (Planned Change) dan Perubahan yang tidak direncanakan (Unplanned Change).</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">2. Faktor Pendorong Perubahan:</h4>
+                    <p>Adanya penemuan baru (Inovasi), bertambah/berkurangnya penduduk, konflik sosial, revolusi, serta kontak dengan kebudayaan masyarakat lain.</p>
+                `,
+                keypoints: [
+                    "Evolusi terjadi secara lambat, sedangkan Revolusi terjadi secara cepat.",
+                    "Inovasi dan Asimilasi merupakan pendorong utama terjadinya transformasi sosial.",
+                    "Sikap tradisionalis dan isolasi daerah merupakan penghambat utama perubahan sosial."
+                ]
+            },
+            {
+                id: "bab-2",
+                babNum: "Bab 2",
+                semester: 1,
+                subject: "Sosiologi",
+                title: "Globalisasi dan Modernisasi",
+                description: "Mempelajari fenomena keterhubungan antabangsa, penyebaran teknologi, serta cara menyikapi perubahan global.",
+                icon: "fa-globe",
+                color: "amber",
+                indicators: [
+                    "Mendeskripsikan konsep dan karakteristik globalisasi.",
+                    "Menganalisis dampak positif dan negatif globalisasi.",
+                    "Menjelaskan upaya menghadapi globalisasi di bidang ilmu pengetahuan, IPTEK, dan budaya."
+                ],
+                content: `
+                    <p>Globalisasi adalah proses mendunianya suatu hal (informasi, pemikiran, gaya hidup, dan teknologi) tanpa terhalang oleh batas-batas wilayah geografis negara.</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">1. Saluran & Bidang Globalisasi:</h4>
+                    <p>Globalisasi berlangsung di berbagai bidang seperti Ekonomi (Pasar bebas), Komunikasi (Internet & Media Sosial), Budaya (Pop Culture), dan IPTEK.</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">2. Dampak Globalisasi:</h4>
+                    <p><strong>Dampak Positif:</strong> Peningkatan efektivitas komunikasi, berkembangnya IPTEK, mobilitas tinggi, serta terbukanya pasar internasional.</p>
+                    <p><strong>Dampak Negatif:</strong> Westernisasi, demoralisasi, kesenjangan sosial ekonomi, serta lunturnya nilai-nilai kearifan lokal (konsumerisme & individualisme).</p>
+                `,
+                keypoints: [
+                    "Globalisasi menghilangkan sekat antarnegara melalui kemajuan IPTEK dan komunikasi.",
+                    "Sikap kritis, selektif, dan memperkuat kearifan lokal adalah kunci menghadapi dampak negatif globalisasi.",
+                    "Westernisasi beda dengan Modernisasi: Modernisasi meniru pola pikir maju, Westernisasi sekadar meniru gaya hidup barat."
+                ]
+            },
+            {
+                id: "bab-3",
+                babNum: "Bab 3",
+                semester: 2,
+                subject: "Ekonomi",
+                title: "Perdagangan Internasional & Ekonomi Kreatif",
+                description: "Menjelaskan konsep ekspor-impor, faktor pendorong perdagangan eksternal, daya saing ekonomi, dan pasar bebas.",
+                icon: "fa-chart-line",
+                color: "emerald",
+                indicators: [
+                    "Menjelaskan pengertian dan manfaat perdagangan internasional.",
+                    "Mengidentifikasi faktor pendorong dan hambatan perdagangan antarnegara.",
+                    "Memahami peran Ekonomi Kreatif dan Organisasi Pasar Bebas (MEA, WTO, AFTA)."
+                ],
+                content: `
+                    <p>Perdagangan internasional adalah proses pertukaran barang dan jasa antara dua negara atau lebih atas dasar kesepakatan bersama untuk memenuhi kebutuhan bersama.</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">1. Pendorong Perdagangan Internasional:</h4>
+                    <p>Perbedaan Sumber Daya Alam (SDA), perbedaan tingkat teknologi, penghematan biaya produksi (skala ekonomi), serta perbedaan selera masyarakat.</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">2. Hambatan & Pasar Bebas:</h4>
+                    <p>Hambatan meliputi penerapan Kuota, Tarif/Bea Masuk, Proteksi, serta larangan impor. Contoh organisasi perdagangan bebas dunia meliputi MEA (Masyarakat Ekonomi ASEAN), WTO, dan APEC.</p>
+                `,
+                keypoints: [
+                    "Ekspor adalah menjual barang ke luar negeri, Impor adalah membeli barang dari luar negeri.",
+                    "Komoditas unggulan Indonesia mencakup kelapa sawit, karet, kopi, dan kerajinan kreatif.",
+                    "Ekonomi kreatif mengandalkan gagasan, ide, dan kreativitas SDM."
+                ]
+            },
+            {
+                id: "bab-4",
+                babNum: "Bab 4",
+                semester: 2,
+                subject: "Sejarah",
+                title: "Indonesia Masa Kemerdekaan Hingga Reformasi",
+                description: "Perjalanan sejarah Indonesia mulai dari Proklamasi 1945, Demokrasi Terpimpin, Orde Baru, hingga lahirnya Era Reformasi.",
+                icon: "fa-landmark",
+                color: "indigo",
+                indicators: [
+                    "Menjelaskan peristiwa Proklamasi Kemerdekaan 17 Agustus 1945.",
+                    "Membandingkan periode Demokrasi Liberal, Demokrasi Terpimpin, dan Orde Baru.",
+                    "Menganalisis latar belakang lahirnya Reformasi tahun 1998."
+                ],
+                content: `
+                    <p>Sejarah perjuangan bangsa Indonesia pasca proklamasi diwarnai oleh perjuangan mempertahankan kemerdekaan secara fisik maupun diplomasi.</p>
+                    <h4 class="font-bold text-slate-800 text-base mt-4">1. Perkembangan Politik Pasca Kemerdekaan:</h4>
+                    <p><strong>Masa Kemerdekaan (1945-1950):</strong> Menghadapi agresi militer Belanda dan perjuangan diplomasi (Linggarjati, Renville, KMB).</p>
+                    <p><strong>Orde Baru (1966-1998):</strong> Di bawah kepemimpinan Presiden Soeharto dengan fokus stabilitas politik dan pembangunan ekonomi (Repelita).</p>
+                    <p><strong>Era Reformasi (1998-sekarang):</strong> Dimulai setelah jatuhnya Orde Baru, ditandai dengan kebebasan pers, demokratisasi, dan otonomi daerah.</p>
+                `,
+                keypoints: [
+                    "Proklamasi 17 Agustus 1945 merupakan titik balik berdirinya Negara Kesatuan Republik Indonesia.",
+                    "Diplomasi KMB 1949 memicu pengakuan kedaulatan Indonesia oleh Belanda.",
+                    "Gerakan mahasiswa 1998 melahirkan era Reformasi yang menjunjung kebebasan demokrasi."
+                ]
+            }
+        ];
+
+        const videoData = [
+            {
+                id: "v1",
+                title: "Perubahan Sosial Budaya - Konsep & Bentuknya",
+                category: "Sosiologi",
+                duration: "08:45",
+                description: "Penjelasan visual menarik tentang perbedaan evolusi, revolusi, serta pengaruh besar dan kecil perubahan sosial.",
+                embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" // Fallback simulation
+            },
+            {
+                id: "v2",
+                title: "Globalisasi & Dampaknya Bagi Remaja",
+                category: "Sosiologi",
+                duration: "10:12",
+                description: "Bagaimana tren global memengaruhi kehidupan sehari-hari, budaya pop, dan pentingnya menyaring budaya luar.",
+                embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: "v3",
+                title: "Memahami Perdagangan Internasional: Ekspor vs Impor",
+                category: "Ekonomi",
+                duration: "07:30",
+                description: "Simulasi sederhana bagaimana barang dikirim antarnegara dan manfaat devisa bagi pembangunan negara.",
+                embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: "v4",
+                title: "Pengenalan Pasar Bebas & MEA",
+                category: "Ekonomi",
+                duration: "09:15",
+                description: "Apa itu Masyarakat Ekonomi ASEAN? Bagaimana peluang anak muda Indonesia bersaing di Asia Tenggara.",
+                embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: "v5",
+                title: "Detik-Detik Proklamasi Kemerdekaan RI 1945",
+                category: "Sejarah",
+                duration: "12:00",
+                description: "Narasikan kronologi Rengasdengklok hingga pembacaan teks proklamasi di Jalan Pegangsaan Timur No. 56.",
+                embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: "v6",
+                title: "Lahirnya Era Reformasi 1998 di Indonesia",
+                category: "Sejarah",
+                duration: "11:20",
+                description: "Latar belakang krisis moneter dan gerakan mahasiswa yang menandai babak baru demokrasi Indonesia.",
+                embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            }
+        ];
+
+        const quizData = [
+            {
+                id: 1,
+                question: "Perubahan yang berlangsung secara lambat dan memerlukan waktu yang lama tanpa ada kehendak tertentu dari masyarakat dinamakan...",
+                options: ["Revolusi", "Evolusi", "Inovasi", "Modernisasi"],
+                answer: 1 // index for Evolusi
+            },
+            {
+                id: 2,
+                question: "Sikap masyarakat yang sulit menerima perubahan sosial budaya biasanya disebabkan oleh...",
+                options: [
+                    "Sikap terbuka terhadap ide baru",
+                    "Pendidikan yang sudah sangat maju",
+                    "Rasa khawatir akan terjadinya pergeseran nilai budaya asli",
+                    "Kemudahan akses informasi komunikasi"
+                ],
+                answer: 2
+            },
+            {
+                id: 3,
+                question: "Proses masuknya budaya luar sehingga batas-batas wilayah antarnegara seolah tidak ada lagi disebut...",
+                options: ["Globalisasi", "Isolasi", "Nasionalisasi", "Reorganisasi"],
+                answer: 0
+            },
+            {
+                id: 4,
+                question: "Kegiatan menjual barang atau komoditas hasil produksi dalam negeri ke luar negeri disebut...",
+                options: ["Impor", "Ekspor", "Barter", "Proteksi"],
+                answer: 1
+            },
+            {
+                id: 5,
+                question: "Peristiwa sejarah yang menandai berdirinya kedaulatan Negara Kesatuan Republik Indonesia terjadi pada...",
+                options: ["28 Oktober 1928", "10 November 1945", "17 Agustus 1945", "20 Mei 1908"],
+                answer: 2
+            }
+        ];
+
+        /* ==================== STATE MANAGEMENT ==================== */
+        let activeTab = 'home';
+        let readStatus = JSON.parse(localStorage.getItem('ips9_read_status')) || {};
+        let currentActiveMateri = null;
+        let quizState = {
+            currentIndex: 0,
+            userAnswers: Array(quizData.length).fill(null),
+            isSubmitted: false
+        };
+
+        /* ==================== INITIALIZATION ==================== */
+        window.onload = function() {
+            renderHomeChapters();
+            renderMateriCards();
+            renderVideoGallery(videoData);
+            updateProgressCounters();
+        };
+
+        /* ==================== NAVIGATION LOGIC ==================== */
+        function switchTab(tabId) {
+            activeTab = tabId;
+            
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('hidden'));
+            
+            // Show target section
+            const target = document.getElementById(`section-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Update Nav styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-sky-600', 'bg-sky-50');
+                btn.classList.add('text-slate-600');
+            });
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-sky-600', 'bg-sky-50');
+                activeNav.classList.remove('text-slate-600');
+            }
+
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* ==================== HOME SECTION ==================== */
+        function renderHomeChapters() {
+            const container = document.getElementById('home-chapter-list');
+            container.innerHTML = materiData.map(item => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-${item.color}-100 text-${item.color}-700 uppercase">${item.babNum}</span>
+                            <span class="text-xs font-semibold text-slate-400">Sem ${item.semester}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base mb-2">${item.title}</h3>
+                        <p class="text-slate-500 text-xs line-clamp-2 mb-4">${item.description}</p>
+                    </div>
+                    <button onclick="openMateriDetail('${item.id}')" class="w-full py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200 transition flex items-center justify-center space-x-1">
+                        <span>Baca Materi</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        /* ==================== MATERI SECTION ==================== */
+        function renderMateriCards(dataToRender = materiData) {
+            const container = document.getElementById('materi-cards-container');
+            
+            if(dataToRender.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200">
+                        <i class="fa-solid fa-file-circle-xmark text-4xl text-slate-300 mb-3"></i>
+                        <p class="text-slate-500 text-sm font-medium">Tidak ada materi yang sesuai dengan pencarian Anda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = dataToRender.map(item => {
+                const isRead = !!readStatus[item.id];
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2.5 py-1 bg-sky-100 text-sky-700 text-xs font-bold rounded-lg uppercase">${item.babNum}</span>
+                                    <span class="text-xs font-medium text-slate-400">• ${item.subject}</span>
+                                </div>
+                                ${isRead ? `
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                                        <i class="fa-solid fa-check mr-1 text-[10px]"></i> Selesai
+                                    </span>
+                                ` : `
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">
+                                        Belum dibaca
+                                    </span>
+                                `}
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800 mb-2">${item.title}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">${item.description}</p>
+                            
+                            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Poin Pembelajaran:</p>
+                                ${item.indicators.slice(0, 2).map(ind => `
+                                    <div class="flex items-start space-x-2 text-xs text-slate-600">
+                                        <i class="fa-solid fa-circle-dot text-[8px] text-sky-500 mt-1"></i>
+                                        <span>${ind}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-500 font-medium">Semester ${item.semester}</span>
+                            <button onclick="openMateriDetail('${item.id}')" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
+                                <span>Pelajari Bab</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterMateri() {
+            const searchVal = document.getElementById('materi-search').value.toLowerCase();
+            const semesterVal = document.getElementById('materi-semester-filter').value;
+
+            const filtered = materiData.filter(item => {
+                const matchesSearch = item.title.toLowerCase().includes(searchVal) || item.description.toLowerCase().includes(searchVal);
+                const matchesSemester = semesterVal === 'all' || item.semester.toString() === semesterVal;
+                return matchesSearch && matchesSemester;
+            });
+
+            renderMateriCards(filtered);
+        }
+
+        /* Modal detail handling */
+        function openMateriDetail(materiId) {
+            const item = materiData.find(m => m.id === materiId);
+            if (!item) return;
+
+            currentActiveMateri = item;
+
+            document.getElementById('modal-chapter-tag').innerText = item.babNum;
+            document.getElementById('modal-semester-tag').innerText = `Semester ${item.semester}`;
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-subtitle').innerText = `${item.subject} • IPS Kelas 9`;
+
+            // Render indicators
+            document.getElementById('modal-indicators').innerHTML = item.indicators.map(ind => `<li>${ind}</li>`).join('');
+
+            // Render content body
+            document.getElementById('modal-body').innerHTML = item.content;
+
+            // Render key points
+            document.getElementById('modal-keypoints').innerHTML = item.keypoints.map(pt => `
+                <li class="flex items-start space-x-2">
+                    <i class="fa-solid fa-check text-emerald-500 text-xs mt-1"></i>
+                    <span>${pt}</span>
+                </li>
+            `).join('');
+
+            updateModalReadButton();
+
+            document.getElementById('materi-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMateriModal() {
+            document.getElementById('materi-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            currentActiveMateri = null;
+        }
+
+        function toggleReadStatusModal() {
+            if (!currentActiveMateri) return;
+
+            const id = currentActiveMateri.id;
+            readStatus[id] = !readStatus[id];
+            localStorage.setItem('ips9_read_status', JSON.stringify(readStatus));
+
+            updateModalReadButton();
+            renderMateriCards();
+            updateProgressCounters();
+        }
+
+        function updateModalReadButton() {
+            if (!currentActiveMateri) return;
+            const isRead = !!readStatus[currentActiveMateri.id];
+            const btn = document.getElementById('modal-mark-done-btn');
+
+            if (isRead) {
+                btn.className = "px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center space-x-2 bg-slate-200 text-slate-700 hover:bg-slate-300";
+                btn.innerHTML = `<i class="fa-solid fa-rotate-left"></i><span>Tandai Belum Selesai</span>`;
+            } else {
+                btn.className = "px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center space-x-2 bg-emerald-600 text-white hover:bg-emerald-500 shadow-md";
+                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>Tandai Selesai Dibaca</span>`;
+            }
+        }
+
+        function updateProgressCounters() {
+            const completedCount = Object.values(readStatus).filter(Boolean).length;
+            const totalCount = materiData.length;
+            const percent = Math.round((completedCount / totalCount) * 100);
+
+            document.getElementById('materi-completed-count').innerText = completedCount;
+            document.getElementById('materi-total-count').innerText = totalCount;
+            document.getElementById('materi-progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent-home').innerText = `${percent}%`;
+        }
+
+        /* ==================== VIDEO SECTION ==================== */
+        function renderVideoGallery(videos) {
+            const container = document.getElementById('video-grid');
+            container.innerHTML = videos.map(vid => `
+                <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <!-- Video Player Simulation Container -->
+                        <div class="relative bg-slate-900 aspect-video flex items-center justify-center group cursor-pointer" onclick="playVideoSimulation(this, '${vid.title}')">
+                            <div class="absolute inset-0 bg-slate-800/60 group-hover:bg-slate-800/40 transition flex flex-col items-center justify-center p-4 text-center">
+                                <div class="w-12 h-12 rounded-full bg-sky-600 text-white flex items-center justify-center text-lg shadow-lg group-hover:scale-110 transition transform mb-2">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-white/90">Klik untuk Memutar Video</span>
+                            </div>
+                            <span class="absolute bottom-2 right-2 bg-slate-900/80 text-white text-[10px] font-mono px-2 py-0.5 rounded">
+                                ${vid.duration}
+                            </span>
+                        </div>
+
+                        <div class="p-5">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-[11px] font-bold rounded-md uppercase">${vid.category}</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-2 line-clamp-2">${vid.title}</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed line-clamp-3">${vid.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterVideoCategory(cat) {
+            // Update Active Filter Button UI
+            document.querySelectorAll('.video-cat-btn').forEach(btn => {
+                btn.classList.remove('bg-sky-600', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            });
+            event.currentTarget.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            event.currentTarget.classList.add('bg-sky-600', 'text-white');
+
+            if (cat === 'all') {
+                renderVideoGallery(videoData);
+            } else {
+                const filtered = videoData.filter(v => v.category === cat);
+                renderVideoGallery(filtered);
+            }
+        }
+
+        function playVideoSimulation(containerEl, title) {
+            containerEl.innerHTML = `
+                <div class="w-full h-full bg-black flex flex-col items-center justify-center p-4 text-center text-white">
+                    <i class="fa-solid fa-circle-notch animate-spin text-2xl text-sky-400 mb-2"></i>
+                    <p class="text-xs font-semibold text-slate-300">Simulasi Pemutaran Video Edukasi:</p>
+                    <p class="text-sm font-bold text-amber-300 mt-1">"${title}"</p>
+                </div>
+            `;
+        }
+
+        /* ==================== KUIS SECTION ==================== */
+        function startQuiz() {
+            quizState.currentIndex = 0;
+            quizState.userAnswers = Array(quizData.length).fill(null);
+            quizState.isSubmitted = false;
+
+            document.getElementById('quiz-start-box').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            document.getElementById('quiz-active-box').classList.remove('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const q = quizData[quizState.currentIndex];
+            const total = quizData.length;
+
+            document.getElementById('quiz-current-num').innerText = quizState.currentIndex + 1;
+            document.getElementById('quiz-total-num').innerText = total;
+
+            // Progress bar
+            const percent = ((quizState.currentIndex + 1) / total) * 100;
+            document.getElementById('quiz-progress-inner').style.width = `${percent}%`;
+
+            // Question Text
+            document.getElementById('quiz-question-text').innerText = `${q.id}. ${q.question}`;
+
+            // Options
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = q.options.map((opt, idx) => {
+                const isSelected = quizState.userAnswers[quizState.currentIndex] === idx;
+                const letter = String.fromCharCode(65 + idx); // A, B, C, D
+
+                return `
+                    <button onclick="selectQuizOption(${idx})" class="w-full text-left p-4 rounded-2xl border transition flex items-center space-x-3 ${
+                        isSelected 
+                        ? 'border-sky-500 bg-sky-50 text-sky-900 font-semibold ring-2 ring-sky-200' 
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                    }">
+                        <span class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${
+                            isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-500'
+                        }">
+                            ${letter}
+                        </span>
+                        <span class="text-sm">${opt}</span>
+                    </button>
+                `;
+            }).join('');
+
+            // Buttons
+            document.getElementById('quiz-prev-btn').disabled = quizState.currentIndex === 0;
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (quizState.currentIndex === total - 1) {
+                nextBtn.innerText = "Selesai & Lihat Nilai";
+                nextBtn.className = "px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition";
+            } else {
+                nextBtn.innerHTML = `Selanjutnya <i class="fa-solid fa-chevron-right ml-2"></i>`;
+                nextBtn.className = "px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-xl transition";
+            }
+        }
+
+        function selectQuizOption(optIndex) {
+            quizState.userAnswers[quizState.currentIndex] = optIndex;
+            renderQuizQuestion();
+        }
+
+        function prevQuestion() {
+            if (quizState.currentIndex > 0) {
+                quizState.currentIndex--;
+                renderQuizQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (quizState.currentIndex < quizData.length - 1) {
+                quizState.currentIndex++;
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            let score = 0;
+            quizData.forEach((q, idx) => {
+                if (quizState.userAnswers[idx] === q.answer) {
+                    score += (100 / quizData.length);
+                }
+            });
+
+            document.getElementById('quiz-active-box').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.remove('hidden');
+
+            document.getElementById('quiz-final-score').innerText = Math.round(score);
+
+            const feedbackEl = document.getElementById('quiz-feedback-text');
+            if (score >= 80) {
+                feedbackEl.innerText = "Luar biasa! Anda telah menguasai materi IPS Kelas 9 dengan sangat baik. Pertahankan prestasimu!";
+            } else if (score >= 60) {
+                feedbackEl.innerText = "Bagus! Pemahaman Anda sudah cukup memadai. Baca kembali ringkasan materi untuk hasil yang lebih maksimal.";
+            } else {
+                feedbackEl.innerText = "Jangan berkecil hati! Pelajari kembali materi pembelajaran di menu 'Materi' dan coba kuis lagi.";
+            }
+        }
+    </script>
+</body>
+</html>
